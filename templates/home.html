@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Livros</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="header">
+        <h1>Lista de Livros</h1>
+        {% if livro_nao_encontrado %}
+            <p class="error-msg">Este livro não está na nossa biblioteca.</p>
+        {% endif %}
+        <div class="nav-links">
+            <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+            <a href="{{ url_for('rota_recomendacao') }}" class="btn">Recomendação de Livro</a>
+        </div>
+    </div>
+    
+    <form action="{{ url_for('home') }}" method="post" class="search-form">
+        <label for="titulo">Buscar Livro por Título:</label>
+        <input type="text" id="titulo" name="titulo">
+        <button type="submit" class="btn">Buscar</button>
+    </form>
+
+    <hr>
+
+    <div class="livros-container">
+        {% for livro in livros %}
+        <div class="livro">
+            <div class="livro-info">
+                {% if livro.imagem %}
+                <img src="{{ livro.imagem }}" alt="Capa do livro" class="capa-livro">
+                {% else %}
+                <p class="capa-livro">Lugar da imagem</p>
+                {% endif %}
+                <strong>{{ livro.titulo }}</strong>
+                <p class="autor">Autor: {{ livro.autor }}</p>
+                <p class="release">Release: {{ livro.release }}</p>
+            </div>
+            <form action="{{ url_for('livro', livroname=livro.titulo) }}" method="get" style="display:inline;">
+                <button type="submit" class="btn detalhes-btn">Detalhes do Livro</button>
+            </form>
+        </div>
+        {% if loop.index % 3 == 0 %}
+            <div style="clear:both;"></div> <!-- Limpa a flutuação a cada linha -->
+        {% endif %}
+        {% endfor %}
+    </div>
+</body>
+</html>

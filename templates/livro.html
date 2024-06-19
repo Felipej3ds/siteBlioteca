@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do Livro</title>
+    <style>
+        /* Estilos CSS necessários */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: #555;
+        }
+
+        .livro-container {
+            display: flex;
+            background-color: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .livro-image {
+            max-width: 300px;
+            flex: 0 0 300px;
+        }
+
+        .livro-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+
+        .livro-info {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .livro-info p {
+            margin: 10px 0;
+        }
+
+        .livro-info hr {
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid #ccc;
+        }
+
+        .avaliacoes-section {
+            margin-top: 20px;
+        }
+
+        .nova-avaliacao {
+            margin-top: 20px;
+        }
+
+        .nova-avaliacao textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .nova-avaliacao button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .nova-avaliacao button:hover {
+            background-color: #555;
+        }
+
+        .avaliacao {
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+            display: flex;
+            justify-content: space-between; /* Aligns delete button to the right */
+            align-items: center;
+        }
+
+        .avaliacao p {
+            margin: 5px 0;
+        }
+
+        .delete-form {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabeçalho da página -->
+    <div class="header">
+        <h1>Detalhes do Livro</h1>
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+
+    <!-- Conteúdo principal do livro -->
+    <div class="livro-container">
+        <div class="livro-image">
+            <img src="{{ livro.imagem }}" alt="Capa do Livro">
+        </div>
+        <div class="livro-info">
+            <p><strong>Título:</strong> {{ livro.titulo }}</p>
+            <p><strong>Autor:</strong> {{ livro.autor }}</p>
+            <p><strong>Release:</strong> {{ livro.release }}</p>
+            <p><strong>Gêneros:</strong> {{ livro.generos }}</p>
+            <hr>
+            <p><strong>Resumo:</strong></p>
+            {% if livro.resumos %}
+                {% for resumo in livro.resumos %}
+                    <p>{{ resumo.resumo }}</p>
+                {% endfor %}
+            {% else %}
+                <p>Não há resumo disponível para este livro.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Seção de avaliações -->
+    <div class="avaliacoes-section">
+        <h2>Avaliações dos Leitores</h2>
+        {% if livro.avaliacoes %}
+            {% for avaliacao in livro.avaliacoes %}
+                <div class="avaliacao">
+                    <p><strong>{{ avaliacao.usuario.username }}</strong>: {{ avaliacao.avaliacao_livro }}</p>
+                    {% if 'username' in session and avaliacao.usuario.username == session['username'] %}
+                        <form class="delete-form" method="POST" action="{{ url_for('deletar_avaliacao', avaliacao_id=avaliacao.id) }}">
+                            <button type="submit">Deletar</button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Ainda não há avaliações para este livro. Seja o primeiro a avaliar!</p>
+        {% endif %}
+
+        <!-- Formulário para adicionar nova avaliação -->
+        {% if 'username' in session %}
+            <div class="nova-avaliacao">
+                <form method="POST" action="{{ url_for('adicionar_avaliacao', livro_id=livro.id) }}">
+                    <textarea name="avaliacao" placeholder="Escreva sua avaliação..." required></textarea>
+                    <br>
+                    <button type="submit">Enviar Avaliação</button>
+                </form>
+            </div>
+        {% else %}
+            <p>Faça login para deixar sua avaliação.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+/* Estilos da home*/
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+}
+
+.nav-links a {
+    margin-left: 10px;
+    text-decoration: none;
+    color: white;
+}
+
+.search-form {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.search-form label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.search-form input[type=text] {
+    padding: 5px;
+    width: 200px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+}
+
+.search-form button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.search-form button:hover {
+    background-color: #0056b3;
+}
+
+.livros-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.livro {
+    width: calc(33.33% - 20px);
+    margin: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.livro-info {
+    margin-bottom: 10px;
+}
+
+.capa-livro {
+    max-width: 100%;
+    max-height: 150px;
+    margin-bottom: 10px;
+}
+
+.autor, .release {
+    margin: 5px 0;
+}
+
+.btn {
+    padding: 8px 16px;
+    text-decoration: none;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.detalhes-btn {
+    background-color: #28a745;
+}
+
+.detalhes-btn:hover {
+    background-color: #218838;
+}
+
+.form-container {
+    margin: 20px auto;
+    max-width: 400px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-container form {
+    text-align: center;
+}
+
+.form-container input[type=text], .form-container input[type=password] {
+    padding: 10px;
+    width: calc(100% - 22px);
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-container button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+    background-color: #0056b3;
+}
+
+.error-msg {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
